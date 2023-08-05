@@ -1,0 +1,11 @@
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\bin\Debug\RestaurantAutomation.exe.config
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\bin\Debug\RestaurantAutomation.exe
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\bin\Debug\RestaurantAutomation.pdb
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.csproj.AssemblyReference.cache
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.csproj.SuggestedBindingRedirects.cache
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.Form1.resources
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.Properties.Resources.resources
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.csproj.GenerateResource.cache
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.csproj.CoreCompileInputs.cache
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.exe
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.pdb
