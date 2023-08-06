@@ -9,3 +9,4 @@ C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\ob
 C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.csproj.CoreCompileInputs.cache
 C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.exe
 C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.pdb
+C:\Users\Enes Orhan\Desktop\Lessons\RestaurantAutomation\RestaurantAutomation\obj\Debug\RestaurantAutomation.Form2.resources

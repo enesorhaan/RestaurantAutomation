@@ -15,6 +15,12 @@ namespace RestaurantAutomation.Models
 
         public string creationDate { get; set; }
         public decimal totalPrice { get; set; }
+        public string paymentMethod { get; set; }
+        public List<string> orderList { get; set; }
 
+        public override string ToString()
+        {
+            return $"Order List on {creationDate}:\nTotal Price: {totalPrice}\nPayment Method: {paymentMethod}";
+        }
     }
 }

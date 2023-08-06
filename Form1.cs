@@ -26,8 +26,9 @@ namespace RestaurantAutomation
         DateTime currentDate = DateTime.Now;
 
         List<string> orderListName = new List<string>();
-        List<int> orderListPrice = new List<int>();
-        int count = 0;
+        List<decimal> orderListPrice = new List<decimal>();
+
+        Form2 form2;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -35,7 +36,9 @@ namespace RestaurantAutomation
             pitas = Helper.CreatePitas();
             beverages = Helper.CreateBeverages();
             menus = Helper.CreateMenus();
+            pbFlakedCheese.Visible = pbMix.Visible = pbSausage.Visible = pbVegetables.Visible = true;
             ListControls();
+            form2 = new Form2(orderListName,orderListPrice,this);
         }
 
         private void ListControls()
@@ -62,11 +65,12 @@ namespace RestaurantAutomation
 
         private void rbSingle_Click(object sender, EventArgs e)
         {
-            btnFlakedCheese.Visible = btnMix.Visible = btnSausage.Visible = btnVegetables.Visible = true;
+            gbSingular.Visible = true;
+            pbFlakedCheese.Visible = pbMix.Visible = pbSausage.Visible = pbVegetables.Visible = true;
             cbMenus.Text = " ";
             cbAnotherBeverage.Text = " ";
             cbMenus.Enabled = false;
-            lblMnuCont.Visible = lblMnuPrc.Visible = lblMenuPrice.Visible = lblMenuContents.Visible = lblAnotherBeverage.Visible = lblMenuNewPrice.Visible = lblMnuNewPrc.Visible = cbAnotherBeverage.Visible = btnAddMenu.Visible = false;
+            gbMenu.Visible = false;
             lblMenuContents.Text = " ";
             lblMenuPrice.Text = " ";
             lblMenuNewPrice.Text = " ";
@@ -75,9 +79,10 @@ namespace RestaurantAutomation
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             cbAnotherBeverage.Items.Clear();
-            btnFlakedCheese.Visible = btnMix.Visible = btnSausage.Visible = btnVegetables.Visible = false;
+            gbSingular.Visible = false;
+            pbFlakedCheese.Visible = pbMix.Visible = pbSausage.Visible = pbVegetables.Visible = true;
             cbMenus.Enabled = true;
-            lblMnuCont.Visible = lblMnuPrc.Visible = lblMenuPrice.Visible = lblMenuContents.Visible = lblAnotherBeverage.Visible = lblMenuNewPrice.Visible = lblMnuNewPrc.Visible = cbAnotherBeverage.Visible = btnAddMenu.Visible = true;
+            gbMenu.Visible = true;
         }
 
         private void cbMenus_SelectedIndexChanged(object sender, EventArgs e)
@@ -160,11 +165,12 @@ namespace RestaurantAutomation
                 {
                     if (cbMenus.Text == menu.menuName)
                     {
-                        lbOrderContents.Items.Add(menu.menuName);
-                        if (cbExtraBeverages.Text != " ")
-                            sales.totalPrice += menu.price;
+                        orderListName.Add(menu.menuName);
+                        if (cbAnotherBeverage.SelectedIndex == 0 || cbAnotherBeverage.Text == "")
+                            orderListPrice.Add(menu.price);
                         else
-                            sales.totalPrice += menu.anotherPrice;
+                            orderListPrice.Add(menu.anotherPrice);
+                        updateListBox();
                         updateTotalPrice();
                     }
                 }
@@ -177,69 +183,106 @@ namespace RestaurantAutomation
                 MessageBox.Show("Add something to the order list");
             else
             {
-
+                this.Hide();
+                form2.Show();
+                form2.ListDetail();
+                orderListName.Clear();
+                updateListBox();
+                orderListPrice.Clear();
+                updateTotalPrice();
             }
         }
 
         private void btnRemoveAll_Click(object sender, EventArgs e)
         {
-            lbOrderContents.Items.Clear();
-            sales.totalPrice = 0;
+            orderListName.Clear();
+            updateListBox();
+            orderListPrice.Clear();
             updateTotalPrice();
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if(lbOrderContents.CanSelect)
-                lbOrderContents.Items.Remove(lbOrderContents.SelectedItem);
-            else
-                MessageBox.Show("Please select the content to delete!");
+            try
+            {
+                orderListName.RemoveAt(lbOrderContents.SelectedIndex);
+                orderListPrice.RemoveAt(lbOrderContents.SelectedIndex);
+                updateListBox();
+                updateTotalPrice();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please select the remove from order list!");
+            }
         }
 
         private void btnFlakedCheese_Click(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            lbOrderContents.Items.Add(pitas[Convert.ToInt32(button.Tag)].pitaName);
-            sales.totalPrice += pitas[Convert.ToInt32(button.Tag)].price;
+            orderListName.Add(pitas[Convert.ToInt32(button.Tag)].pitaName);
+            orderListPrice.Add(pitas[Convert.ToInt32(button.Tag)].price);
+            updateListBox();
             updateTotalPrice();
+        }
+        private void updateListBox()
+        {
+            lbOrderContents.Items.Clear();
+            foreach (string orderName in orderListName)
+            {
+                lbOrderContents.Items.Add(orderName);
+            }
         }
 
         private void updateTotalPrice()
         {
-            lblTotalPrice.Text = $"{sales.totalPrice} TL";
+            decimal totalPrice = 0;
+            foreach (decimal price in orderListPrice)
+            {
+                totalPrice += price;
+            }
+            lblTotalPrice.Text = $"{totalPrice} TL";
         }
 
         private void btnAddBeverage_Click(object sender, EventArgs e)
         {
-            if(cbExtraBeverages.Text == "" || cbExtraBeverages.SelectedIndex == 0)
-                MessageBox.Show("Please select the extra beverage!");
-            else if(nmrQty.Value == 0)
-                MessageBox.Show("Please select the Quantity!");
-            else
+            try
             {
-                lbOrderContents.Items.Add(cbExtraBeverages.Text);
-                sales.totalPrice = beverages[cbExtraBeverages.SelectedIndex + 1].price * nmrQty.Value; 
-                updateTotalPrice();
+                if (cbExtraBeverages.Text == "" || cbExtraBeverages.SelectedIndex == 0)
+                    MessageBox.Show("Please select the extra beverage!");
+                else if (nmrQty.Value == 0)
+                    MessageBox.Show("Please select the Quantity!");
+                else
+                {
+                    orderListName.Add(cbExtraBeverages.Text);
+                    orderListPrice.Add(beverages[cbExtraBeverages.SelectedIndex - 1].price * nmrQty.Value);
+                    updateListBox();
+                    updateTotalPrice();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void btnDesert_Click(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            lbOrderContents.Items.Add(button.Text);
+            orderListName.Add(button.Text);
+            updateListBox();
             switch (button.Text)
             {
                 case "Desert":
-                    sales.totalPrice += 25;
+                    orderListPrice.Add(25);
                     break;
                 case "Cheese":
-                    sales.totalPrice += 5;
+                    orderListPrice.Add(5);
                     break;
                 case "Sauce":
-                    sales.totalPrice += 10;
+                    orderListPrice.Add(10);
                     break;
                 case "CrispyEdge":
-                    sales.totalPrice += 18;
+                    orderListPrice.Add(18);
                     break;
                 default:
                     break;
