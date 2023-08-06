@@ -37,6 +37,7 @@ namespace RestaurantAutomation
             beverages = Helper.CreateBeverages();
             menus = Helper.CreateMenus();
             pbFlakedCheese.Visible = pbMix.Visible = pbSausage.Visible = pbVegetables.Visible = true;
+            gbSingular.Visible = gbMenu.Visible = false;
             ListControls();
             form2 = new Form2(orderListName,orderListPrice,this);
         }
@@ -190,6 +191,7 @@ namespace RestaurantAutomation
                 updateListBox();
                 orderListPrice.Clear();
                 updateTotalPrice();
+                rbSingle.Checked = radioButton2.Checked = false;
             }
         }
 
